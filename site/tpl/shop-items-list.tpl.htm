@@ -1,0 +1,179 @@
+<style>
+.grid_view{
+    display: table; 
+    width: 800px; 
+    border-spacing: 5px 5px;
+    border:0px solid #000;   
+}
+.grid_cell{
+    display: table-cell;
+    padding: 5px;
+    float:left;
+}
+
+.parent{
+    width:250px;
+    height:auto;
+}
+.child{
+    width:250px;
+    height:auto;
+    display:none;
+}
+.parent:hover .child{
+    display:block;
+    position:absolute;
+    top:inherit;
+    background-color:#fff;
+    margin-top:-220px;
+}
+.wrap_show_item, .wrap_hidden_item{
+    padding:15px;
+    text-align:center;
+}
+.shadow{
+     -webkit-box-shadow: 0 15px 10px -10px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0,0,0,0.1) inset;
+     -moz-box-shadow: 0 15px 10px -10px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0,0,0,0.1) inset;
+     box-shadow: 0 15px 10px -10px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3), 0 0 40px rgba(0,0,0,0.1) inset;
+ }
+
+/*============ Button ============*/        
+a.btn_buy{
+    font-weight: 900;
+    font-size:100%;
+    color: #fff;
+    text-decoration: none;
+    padding: .6em .5em;
+    border-radius: 0px;
+    background: #d91219;
+    box-shadow: -1px -3px #b30 inset;
+    transition: 0.3s;
+} 
+    a.btn_buy:hover{
+        background: #b30; 
+    }
+    a.btn_buy:active {
+        background: #d91219;
+        box-shadow: 0 3px #b30 inset;
+    }
+/*============ /Button ============*/ 
+</style>
+<?
+//SYS::varDump($param,__FILE__,__LINE__);
+$param_arr = explode("-",$param[1]);
+$subcateg_id = $param_arr[0];
+$subcateg = Menu::getBreadCrumbs($subcateg_id);
+$categ = Menu::getBreadCrumbs($subcateg[0]['parent_id']);
+
+$image = (file_exists("/product-image/{$subcateg[0]['id']}/{$subcateg[0]['img']}") && filesize("/product-image/{$subcateg[0]['id']}/{$subcateg[0]['img']}") !== 0) ? PATH_IMG_ITEMS."/{$subcateg[0]['id']}/{$subcateg[0]['img']}" : PATH_IMG."/noimage.png";
+?>
+<?include PATH_INC."/breadcrumbs.tpl.htm"?>
+<div class="both br_5"></div>
+<div class="description">
+	<div class="image">
+		<a title="<?=$subcateg[0]['caption']?>" data-lightbox="block-category" target="_blank" href="<?=$image?>">
+	    	<img align="left" src="<?=$image?>"  style="width:150px">
+		</a>
+	</div>
+	
+	<div class="full">
+		<span style="text-align:justify;"><?=$subcateg[0]['description']?></span>
+	</div>
+</div>
+
+
+<div class="both br_5"></div>
+<div class="title">Товары</div>
+
+
+
+<div class="both br_10"></div>
+<div class="both br_5"></div>
+<?include PATH_INC."/sortirovschik_top.tpl.htm"?>
+<div class="both br_5"></div>
+<!-- <ul class="block wares"> -->
+
+<div class="grid_view">
+
+<?//SYS::varDump($cat_list)?>
+<?if($cat_list!=NULL){
+    $i=0;
+foreach($cat_list as $key=>$val){
+    $i++;
+// Всякие ссылки, фоны, цвета и прочая
+unset($price_roznica);
+$image = (file_exists("product-image/{$val['id']}/{$val['img']}") && filesize("product-image/{$val['id']}/{$val['img']}") !== 0) ? PATH_IMG_ITEMS."/{$val['id']}/{$val['img']}" : PATH_IMG."/noimage.png";
+$nalichie = ($val['nalichie'] == "-") ? "<div class='catalog-list-price_grey'>Нет в наличии</div>" : "";
+$div_class = ($val['nalichie'] == "-" || $val['nalichie'] == "arch") ? "catalog-list-price_grey" : "catalog-list-price_grn";
+$point = ($val['ddp'] == "1") ? "." : "";
+$link_to_itim_page = SITE_URL."/shop/catalog/product/".$val['id']."/".Text::cirilToLatin($val['brand'])."-".Text::cirilToLatin($val['caption_full']).".html";
+$description_short = ($val['description_short'] !== "") ? $val['description_short'] : "";
+$description_full = ($val['description_full'] !== "") ? $val['description_full'] : "";
+$price_roznica = Price::getPrice($val['postavschik'],$val['price_roznica'],$val['price_diler'],$val['ddp']);
+if($price_roznica == "0" || $price_roznica == "0.00" || $price_roznica == "")
+{
+   $price_roznica = "<div style='font-size:16px;weught:900;'>По запросу</div>";
+   $price_currency = "";
+   $free_dostavka = ""; 	
+}
+else
+{
+    $free_dostavka = ($price_roznica >= MIN_SUMMA_DOSTAVKI)? "Бесплатная доставка" : "";
+    $price_arr = explode(".",$price_roznica);
+    $price_grn = $price_arr[0];
+    $price_kop = (!isset($price_arr[1]) || $price_arr[1] == "")?"00" : $price_arr[1];
+    $price_roznica = "<div class='price_grn'>{$price_grn}.</div><div class='price_kop'>{$price_kop}</div>";
+    $price_currency = CURRENCY; 	
+}
+
+// /Всякие ссылки, фоны, цвета и прочая
+?>
+
+<div style="height:10px"></div>
+<div class="parent grid_cell">
+    <div class="wrap_show_item">
+        <div class="image"><a href="<?=$link_to_itim_page?>"><img src="<?=$image?>" style="width:150px" /></a></div>
+        <div><a href="<?=$link_to_itim_page?>"><?=$val['caption_full']?></a></div>
+        <div class="both br_5"></div>
+<!--         <div class="price_words">Цена:</div>
+        <div class="wrap_price"><?//=$price_roznica?></div>
+        <div class="price_words"> <?//=$price_currency?></div>
+-->                
+        <div class="both br_5"></div>
+                
+        <div class="free_delivery"><?=$free_dostavka?></div>
+    </div>
+    <div class="child shadow">
+        <div class="wrap_hidden_item">
+            <div class="image"><a href="<?=$link_to_itim_page?>"><img src="<?=$image?>" style="width:150px" /></a></div>
+            <div><a href="<?=$link_to_itim_page?>"><?=$val['caption_full']?></a></div>
+            <div class="both br_5"></div>
+<!--            <div class="price_words">Цена:</div>
+            <div class="wrap_price"><?//=$price_roznica?></div>
+            <div class="price_words"> <?//=$price_currency?></div>
+-->
+            <div class="both br_5"></div>
+            <div class=""><p><?=$description_full?></p></div>
+            <div class="both br_5"></div>
+            <div style="display:inline;">
+<!--                <div><input type="text" value="1" style="height:30px;padding:1px 5px;text-align:right;width:30px;float:left;font-size:1.1em;" /></div>  -->
+                <div class="btns">Подробнее/Купить</div>
+            </div>
+            <div class="both br_5"></div>
+        </div>
+    </div>
+</div>
+<?if($i % 3 == 0){?>
+    <div style="clear:both"></div>
+<?}?>
+
+
+        
+        
+
+<?}}?>
+            <div style="clear:both"></div>
+
+</div> 
+<!-- </ul> -->  
+<?include PATH_INC."/sortirovschik_bottom.tpl.htm"?>                  

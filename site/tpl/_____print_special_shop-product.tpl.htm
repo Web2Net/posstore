@@ -1,0 +1,49 @@
+<?if(file_exists(SITE_PATH."/product-image/{$product['1Cid']}.jpg") && filesize(SITE_PATH."/product-image/{$product['1Cid']}.jpg") !== 0)
+{
+    $image = "/product-image/{$product['1Cid']}.jpg";
+}
+else
+{
+    $image = "/index_files/noimage.png";
+}
+?>
+<div style="padding:20px">
+    <div style="float:right"><?=date("d.m.Y")?></div>
+    <div style="text-align:center;"><h1>Коммерческое предложение</h1></div>
+    <table style="width:100%">
+        <tr>
+            <td style="width:300px;vertical-align:top">
+                <img alt="" src="<?=$image?>" width="285" />            
+            </td>
+            <td style="text-align:right;vertical-align:top">
+                <h2><?=$product["name"]?></h2>
+                <div style="font-family:tahoma;font-size:18px;font-weight:bold;padding:4px;">
+<!--  -->
+<div class="catalog-list-price_grn"><?=$product['newprice']?> грн.</div>
+<!--  -->
+                </div>           
+
+<?if($product['annotation']!==""){?>
+                <div><?=$product['annotation']?></div>
+<?}?> 
+<?if($product['price']>300 || $product['newprice']>300){?>
+                <div style="padding:4px;">Бесплатная доставка по Киеву</div><?}?>
+                <div style="height:10px"></div>
+                <div>
+                    Xарактеристики и внешний вид товара могут отличаться от указанных или могут быть изменены производителем без отражения на сайте.
+                </div>
+	    </td>
+	</tr>
+    </table>
+<?if($product['full_text']!=""){?>
+    <div style="padding-left:20px">
+       <?=$product['full_text']?>
+<?}?>
+    </div>
+<br /><br />
+
+        <div style="text-align:justefy;width:100%;border:1px solid #d91219;font-weight:700;padding:5px;-moz-border-radius-topleft: 5px;-webkit-border-top-left-radius: 5px;">Мы строим свою работу основываясь на интересах и потребностях клиентов выбирая наиболее подходящие комплексные решения для Вас, при минимальных тратах Вашего времени и финансов.</div>
+ 
+</div>
+
+</div>

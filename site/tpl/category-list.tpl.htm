@@ -1,0 +1,32 @@
+<style>
+.block_headline{
+margin:3px 3px 3px 3px;
+}
+.block_headline a{
+color:#3366CC;
+font-size: 15px;
+font-family:tahoma;
+}
+</style>
+<div class="article" style="padding:7px 10px 7px 10px;">	
+<h1 style="font-size: 18px; font-weight: normal; margin-bottom: 3px; margin-top: 0px; text-transform: uppercase;">
+&nbsp;<?=$block_name?></h1>
+<table style="width: 100%;margin:0px 0px 0px 0px;" cellpadding="0" cellspacing="0" class="news_block"><tr><td style="padding:0px;">
+<?if($block!=NULL){foreach ($block as $key=>$val){?>
+<div class="newsItem" style="margin-bottom:10px;">
+
+<h2 class="block_headline"><a href="<?=SITE_URL."/article/".$block_seo."/".$val['id']."/".$val['seo'].".html"?>" style="font-weight:bold;"><?=$val["caption"]?></a></h2>
+<?if($val["ilike"]!=""){?><h4 class="like"><span><?=$val["ilike"]?></span></h4><?}?>
+<table style="width: 100%;margin-top:3px;" cellpadding="0" cellspacing="0"><tr>
+<td valign="top">
+<a href="<?=SITE_URL."/article/".$block_seo."/".$val['id']."/".$val['seo'].".html"?>">
+<span class="prewimg ramka">
+<?if($val["image_small"]!=''){?><img border="0" align="left" class="article_image" src="<?=$val["image_small"]?>" alt=""/><?}?>
+</span></a>
+&nbsp;<span class="block_date" style="color:#999;"><?=Time::formatMonth($val["date"])?></span>
+</td>
+<td width="100%" valign="top"><p><?=nl2br($val["short_text"])?></p></td>
+</tr></table>
+</div>
+<?}}?>
+</td></tr></table></div>

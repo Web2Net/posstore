@@ -1,0 +1,147 @@
+<style>
+h5{
+margin:0px 0px 2px 0px;
+font-size:12px;
+color:#ffffff;
+text-align:center;
+border-bottom:solid 1px #287096;
+border-right:solid 1px #287096;
+border-top:solid 1px #00486E;
+border-left:solid 1px #00486E;
+padding:2px 3px 3px 3px;
+background-color:#145C82;
+}
+#sub-sn .submenu a {
+display:block;
+padding:2px 5px 3px 5px;
+text-transform: none;
+font-weight:bold;
+}
+.menu_item_unselect a, .menu_item_unselect{ 
+border-bottom:solid 1px #D7DDFE;
+border-right:solid 1px #D7DDFE;
+border-top:solid 1px #D7DDFE;
+border-left:solid 1px #D7DDFE;
+background-color:#D7DDFE;}
+
+.menudiv a:hover{
+text-decoration:underline!important;
+} 
+.menudiv a{
+
+} 
+</style>
+<script type="text/javascript">
+function flyMenu(menu){
+var smenu='sub-'+ menu;
+var amenu='a-'+ menu;
+document.getElementById(smenu).style.display='block';
+document.getElementById(menu).style.borderRight='1px solid #989AAF';
+document.getElementById(menu).style.backgroundColor='#D7DDFE';
+document.getElementById(amenu).style.color='#111111';
+
+}
+function hideMenu(menu){
+var smenu='sub-'+ menu;
+var amenu='a-'+ menu;
+document.getElementById(smenu).style.display='none';
+document.getElementById(menu).style.borderRight='1px solid #E8EAFF';
+document.getElementById(menu).style.backgroundColor='';
+document.getElementById(amenu).style.color='#ffffff';
+}
+</script>
+
+<div style="background-image: url('/index_files/bg-menu.jpg'); background-repeat: repeat-x; background-position: left top; height: 30px; margin-right: 7px; margin-left: 7px;">
+<table style="width: 100%; border-collapse: collapse; " class="main-menu">
+<tr>
+<td id="man" onClick="flyMenu('man')">
+<div class="menudiv" onMouseOut="hideMenu('man')"><a href="#" id="a-man">Для мужчин</a></div>
+<div style="position:relative;display:none;z-index:100;margin-left:-2px;text-align: left;" name="sub-man" id="sub-man" onMouseOver="flyMenu('man')" onMouseOut="hideMenu('man')"><div class="submenu">
+<?if ($menu["man"]!=NULL){
+foreach($menu["man"] as $key=>$val){
+?><div class="menu_item menu_item_unselect" onmouseover="this.className='menu_item menu_item_select'" onmouseout="this.className='menu_item menu_item_unselect'"><a href="<?=SITE_URL?>/shop/catalog/man/<?=$val["CATID"]?>-15-1/<?=Text::cirilToLatin($val["DESCR"])?>.html"><nobr><?=str_replace(" - муж.","",$val["DESCR"])?></nobr></a></div>
+<?}}?></div></div>
+</td>
+<td id="woman" onClick="flyMenu('woman')">
+<div class="menudiv" onMouseOut="hideMenu('woman')"><a href="#" id="a-woman">Для женщин</a></div>
+<div style="position:relative;display:none;z-index:100;margin-left:-2px;text-align: left;" name="sub-woman" id="sub-woman" onMouseOver="flyMenu('woman')" onMouseOut="hideMenu('woman')"><div class="submenu">
+<?if ($menu["woman"]!=NULL){
+foreach($menu["woman"] as $key=>$val){
+?><div class="menu_item menu_item_unselect" onmouseover="this.className='menu_item menu_item_select'" onmouseout="this.className='menu_item menu_item_unselect'"><a href="<?=SITE_URL?>/shop/catalog/woman/<?=$val["CATID"]?>-15-1/<?=Text::cirilToLatin($val["DESCR"])?>.html"><nobr><?=str_replace(" - жен.","",$val["DESCR"])?></nobr></a></div>
+<?}}?></div></div>
+</td>
+<td id="sn" onClick="flyMenu('sn')"><div class="menudiv" onMouseOut="hideMenu('sn')">
+<a href="#" id="a-sn">Снаряжение</a></div>
+<div style="position:relative;display:none;z-index:100;margin-left:-289px;text-align: left;" name="sub-sn" id="sub-sn" onMouseOver="flyMenu('sn')" onMouseOut="hideMenu('sn')"><div class="submenu" style="padding:5px;">
+<table class="submenu-brand" width="994" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="width:20%;">
+<h5>Бивак</h5>
+<?if ($menu["sn_bivak"]!=NULL){
+foreach($menu["sn_bivak"] as $key=>$val){
+?><div class="menu_item menu_item_unselect" onmouseover="this.className='menu_item menu_item_select'" onmouseout="this.className='menu_item menu_item_unselect'"><a href="<?=SITE_URL?>/shop/catalog/sn_bivak/<?=$val["CATID"]?>-15-1/<?=Text::cirilToLatin($val["DESCR"])?>.html"><?=$val["DESCR"]?></a></div>
+<?}}?></div></div>
+</td>
+<td style="width:20%;">
+<h5>Железо</h5>
+<?if ($menu["sn_jelezo"]!=NULL){
+foreach($menu["sn_jelezo"] as $key=>$val){
+?><div class="menu_item menu_item_unselect" onmouseover="this.className='menu_item menu_item_select'" onmouseout="this.className='menu_item menu_item_unselect'"><a href="<?=SITE_URL?>/shop/catalog/sn_jelezo/<?=$val["CATID"]?>-15-1/<?=Text::cirilToLatin($val["DESCR"])?>.html"><?=$val["DESCR"]?></a></div>
+<?}}?></div></div>
+</td>
+<td style="width:20%;">
+<h5>Подводное</h5>
+<?if ($menu["sn_podvod"]!=NULL){
+foreach($menu["sn_podvod"] as $key=>$val){
+?><div class="menu_item menu_item_unselect" onmouseover="this.className='menu_item menu_item_select'" onmouseout="this.className='menu_item menu_item_unselect'"><a href="<?=SITE_URL?>/shop/catalog/sn_podvod/<?=$val["CATID"]?>-15-1/<?=Text::cirilToLatin($val["DESCR"])?>.html"><?=$val["DESCR"]?></a></div>
+<?}}?></div></div>
+</td>
+<td style="width:20%;">
+<h5>Зима</h5>
+<?if ($menu["sn_zima"]!=NULL){
+foreach($menu["sn_zima"] as $key=>$val){
+?><div class="menu_item menu_item_unselect" onmouseover="this.className='menu_item menu_item_select'" onmouseout="this.className='menu_item menu_item_unselect'"><a href="<?=SITE_URL?>/shop/catalog/sn_zima/<?=$val["CATID"]?>-15-1/<?=Text::cirilToLatin($val["DESCR"])?>.html"><?=$val["DESCR"]?></a></div>
+<?}}?></div></div>
+</td>
+<td style="width:20%;">
+<h5>Вело</h5>
+<?if ($menu["sn_velo"]!=NULL){
+foreach($menu["sn_velo"] as $key=>$val){
+?><div class="menu_item menu_item_unselect" onmouseover="this.className='menu_item menu_item_select'" onmouseout="this.className='menu_item menu_item_unselect'"><a href="<?=SITE_URL?>/shop/catalog/sn_velo/<?=$val["CATID"]?>-15-1/<?=Text::cirilToLatin($val["DESCR"])?>.html"><?=$val["DESCR"]?></a></div>
+<?}}?></div></div>
+</td>
+
+</tr></table>
+</div></div>
+
+</td>
+<td id="sport" onClick="flyMenu('sport')">
+<div class="menudiv" onMouseOut="hideMenu('sport')"><a href="#" id="a-sport">Мой спорт</a></div>
+<div style="position:relative;display:none;z-index:100;margin-left:-2px;text-align: left;" name="sub-sport" id="sub-sport" onMouseOver="flyMenu('sport')" onMouseOut="hideMenu('sport')"><div class="submenu">
+<?if ($menu["sport"]!=NULL){
+foreach($menu["sport"] as $key=>$val){
+?><div class="menu_item menu_item_unselect" onmouseover="this.className='menu_item menu_item_select'" onmouseout="this.className='menu_item menu_item_unselect'"><a href="<?=SITE_URL?>/shop/catalog/sport/<?=$val["CATID"]?>-15-1/<?=Text::cirilToLatin($val["DESCR"])?>.html"><nobr><?=$val["DESCR"]?></nobr></a></div>
+<?}}?></div></div>
+</td>
+<td id="brand" onClick="flyMenu('brand')">
+<div class="menudiv" onMouseOut="hideMenu('brand')"><a href="#" id="a-brand">Бренды</a></div>
+<div style="position:relative;display:none;z-index:100;margin-left:-576px;text-align: left;" name="sub-brand" id="sub-brand" onMouseOver="flyMenu('brand')" onMouseOut="hideMenu('brand')"><div class="submenu" style="padding:5px;">
+<table class="submenu-brand" width="993" cellpadding="0" cellspacing="0" border="0"><tr><td style="width:8%;">
+<?$i=0;
+if ($menu["brand"]!=NULL){
+foreach($menu["brand"] as $key=>$val){?>
+<?if(strpos($val['DESCR'], ".")===false){?>
+<div class="menu_item menu_item_unselect" onmouseover="this.className='menu_item menu_item_select'" onmouseout="this.className='menu_item menu_item_unselect'"><a href="<?=SITE_URL?>/shop/catalog/brand/<?=$val["CATID"]?>-15-1/<?=Text::cirilToLatin($val["DESCR"])?>.html" style="padding:1px 4px 2px 7px;"><?=$val["DESCR"]?></a></div>
+<?$i++;}
+if($i==15){?>
+</td><td style="width:8%;">
+<?$i=0;}
+}}?>
+</td></tr></table>
+</div></div>
+</td>
+<td><div class="menudiv"><a href="<?=SITE_URL?>/shop/catalog/sale/SALE-15-1-pricedown/sale.html">Распродажа</a></div></td>
+<td><div class="menudiv"><a href="<?=SITE_URL?>/article/art/8/dostavka.html">Доставка</a></div></td>
+</tr>
+</table>
+</div>
+<?//var_dump($GLOBALS)?>

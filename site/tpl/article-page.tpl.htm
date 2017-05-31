@@ -1,0 +1,14 @@
+<div id="art-<?=$article["id"]?>" class="article" style="padding:7px 10px 7px 10px;">	
+<table style="width: 100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td valign="top" style="padding-right:7px;">
+<h1 style="font-size: 18px; font-weight: normal; margin-bottom: 7px; margin-top: 0px; text-transform: uppercase;">
+<?=$article["caption"]?></h1>
+</td>
+<td valign="top" width="100px" align="right">
+<div class="red" style="margin: 0px 0px 7px;"><?=$article["date"]?></div>
+</td>
+</tr></table>
+<div style="text-align:justify;"><?=$article["full_text"]?></div>
+<br />
+<div style="padding:7px 0px 1px 0px;clear:both;" id="return"><a href="javascript:history.back()"> «« Вернуться </a></div>
+</div>

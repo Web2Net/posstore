@@ -1,0 +1,53 @@
+<?//SYS::varDump($menu);?>
+<?
+$i=0;
+if($menu['category'] !== NULL)
+{
+    
+    foreach($menu['category'] as $key=>$category)
+    { 
+    $i++;
+?>
+ 
+<ul class="menu" style="">
+    <li class="">
+        <a class="" href="LINK_FOR_CATEGORY">
+            <span class="inl"></span>
+            <span class="inl-block"><?=$category['caption']?></span>
+        </a>
+            <ul class="" style="background-image: url('<?=PATH_IMG?>/<?=$category['img']?>'); background-position: 0px 0px; height: 472px; width: 741px; display: none;">
+                <li class="label"><?=$category['caption']?></li>
+
+<?$subcategory = Menu::listSubMenu($category['id'])?>
+<?//SYS::varDump($subcategory)?>	
+<?
+$n=0;
+if($subcategory !== "" && $subcategory !== 0)
+{?>
+    <?
+    foreach($subcategory as $key=>$subcat)
+    {$n++;?>
+
+                <li>
+                    <a href="/shop/catalog/<?=$category['name']?>/<?=$sub['seolink']?>-15-1/<?=$sub['caption']?>.html">
+                        <span class="inl"></span>
+                        <span class="inl-block"><?=$sub['caption']?></span>
+                    </a>
+                </li>
+
+
+
+
+
+
+            <?}?>
+        <?}?> 
+
+	 <?}?>
+<?}?>   
+
+<?//var_dump($GLOBALS)?>
+
+
+
+

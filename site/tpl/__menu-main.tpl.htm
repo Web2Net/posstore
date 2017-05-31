@@ -1,0 +1,76 @@
+<?//SYS::varDump($menu);?>
+<?
+$i=0;
+if($menu['category'] !== NULL)
+{
+    
+    foreach($menu['category'] as $key=>$category)
+    { 
+    $i++;
+?>
+ 
+<!--Mega Menu Anchor-->
+<?//$category['caption'] = str_replace(" ","<br />",$category['caption']);?>
+<div class="left" style="text-align:center;padding:0px;width:100px;">
+    <a href="#" id="megaanchor<?=$i?>" class="main_menu_category" style="text-decoration:none;">
+        <!--<img src="<?=PATH_IMG?>/<?=$category['img']?>" style="width:50px;height:50px;" />-->
+    
+    <div style="font-size:12px;padding:0px 10px 10px 10px;text-align:center;font-size:10px;font-weight:100"><?=$category['caption']?></div>
+</a>
+</div>
+<?$subcategory = Menu::listSubMenu($category['id'])?>
+<?//SYS::varDump($subcategory)?>	
+<?
+$n=0;
+if($subcategory !== "" && $subcategory !== 0)
+{?>
+<script type="text/javascript">
+//jkmegamenu.definemenu("anchorid", "menuid", "mouseover|click")
+jkmegamenu.definemenu("megaanchor<?=$i?>", "megamenu<?=$i?>", "click")
+</script>
+<div id="megamenu<?=$i?>" class="megamenu" style="background-color:#F0FFF0">
+    <?
+    foreach($subcategory as $key=>$subcat)
+    {$n++;?>
+
+<div class="column">
+	<h3><?=$subcat['caption']?></h3>
+<?$subsubcat = Menu::listSubMenu($subcat['id'])?>
+<?//SYS::varDump($subsubcat)?>
+<?if($subsubcat !== "" && $subsubcat !== 0){?>
+<ul>
+    <?foreach($subsubcat as $key=>$sub)
+    {?>
+	<!--<li><a href="/shop/catalog/posstore/<?=$sub['seolink']?>-15-1/<?=$sub['caption']?>.html" style="font: bold 10px Verdana;"><?=$sub['caption']?></a></li>-->
+	<li><a href="/shop/catalog/<?=$category['name']?>/<?=$sub['seolink']?>-15-1/<?=$sub['caption']?>.html" style="font: bold 10px Verdana;"><?=$sub['caption']?></a></li>
+
+	<?}?>
+	</ul>
+<?}?>	</div>
+<?if($category['seolink']=="comp_tech"){$count_td = "5";}elseif($category['seolink']=="programs"){$count_td = "2";}else{$count_td = "3";}?>
+<?if($n%$count_td==0){?><div class="both br_1"></div><?}?>
+
+
+            <?}?></div>
+        <?}?> 
+
+	 <?}?>
+<?}?>   
+<!-- 
+<a href="<?=SITE_URL?>/page/Оплата_и_доставка/" id="" class="main_menu_category"><span style="color:#d91219;font-weight:900">.</span>Оплата и доставка</a>
+
+
+
+           <td><div class="menudiv"><a href="<?=SITE_URL?>/shop/catalog/sale/SALE-15-1-pricedown/sale.html"><span style="color:#d91219;font-weight:900">.</span>Распродажа</a></div></td>
+            <td><div class="menudiv"><a href="<?=SITE_URL?>/page/Оплата_и_доставка/"><span style="color:#d91219;font-weight:900">.</span>Оплата и доставка</a></div></td>
+
+            
+        </tr>
+    </table>
+</div>
+  -->
+<?//var_dump($GLOBALS)?>
+
+
+
+

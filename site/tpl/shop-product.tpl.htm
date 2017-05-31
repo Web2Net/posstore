@@ -1,0 +1,585 @@
+<?
+
+$param_arr = explode("-",$param[1]);
+$subcateg_id = $param_arr[0];
+$subcateg = Menu::getBreadCrumbs($subcateg_id);
+$categ = Menu::getBreadCrumbs($subcateg[0]['parent_id']);
+SYS::varDump($subcateg,__FILE__,__LINE__,"subcateg");
+?>
+<? 
+// Всякие ссылки, фоны, цвета и прочая
+$link_print_product_page = SITE_URL."/shop/catalog/product/{$product['1Cid']}/print/".Text::cirilToLatin($product['brand'])."-".Text::cirilToLatin($product['caption_full']).".html";
+$brand = ($product["brand"]!="") ? "<h2>".ucfirst($product["brand"])."</h2>" : "";
+$butt_print = ($product["print"]=="1") ? "<div id='wrap_butt_print'><a href='{$link_print_product_page}' class='butt_print' target='_blank'>Печать</a></div>" : "";
+$image = (file_exists(SITE_PATH."/product-image/{$product['id']}/{$product['img']}") && filesize(SITE_PATH."/product-image/{$product['id']}/{$product['img']}") !== 0) ? "/product-image/{$product['id']}/{$product['img']}" : PATH_DESIGN."/img/noimage.png";
+$price_roznica = Price::getPrice($product['postavschik'],$product['price_roznica'],$product['price_diler'],$product['ddp']);
+$free_dostavka = ($price_roznica>MIN_SUMMA_DOSTAVKI) ? "<div class='text_green'>Бесплатная доставка</div>" : "";
+$price_roznica = ($price_roznica == "0" || $price_roznica == "0.00")? "По запросу" : $price_roznica." ".CURRENCY;
+$nalichie = ($product['nalichie'] == "-" || $product['price_diler'] == "0" || $product['nalichie'] == "arch" || $product['nalichie'] == "r") ? "<div class='catalog-list-price_grey'>Нет в наличии</div>" : "";
+$div_class = ($product['nalichie'] == "-" || $product['nalichie'] == "arch") ? "catalog-list-price_grey" : "catalog-list-price_grn";
+$annotation = ($product['annotation']!=="") ? "<div>{$product['annotation']}</div>" : "";
+
+$img1="/product-image/".$product['id']."/1.jpg";
+$img2="/product-image/".$product['id']."/2.jpg";
+$img3="/product-image/".$product['id']."/3.jpg";
+$img4="/product-image/".$product['id']."/4.jpg";
+$img5="/product-image/".$product['id']."/5.jpg";
+if(!file_exists(getenv("DOCUMENT_ROOT").$img1))$img1="/index_files/noimage_740x480.png";
+if(!file_exists(getenv("DOCUMENT_ROOT").$img2))$img2="/index_files/noimage_740x480.png";
+if(!file_exists(getenv("DOCUMENT_ROOT").$img3))$img3="/index_files/noimage_740x480.png";
+if(!file_exists(getenv("DOCUMENT_ROOT").$img4))$img4="/index_files/noimage_740x480.png";
+if(!file_exists(getenv("DOCUMENT_ROOT").$img5))$img5="/index_files/noimage_740x480.png";
+
+
+
+if($product['p1']!=NULL){ // Цвет
+$par1=explode(";",$product['p1']);
+foreach($par1 as $key=>$val){ 
+if($val!='')$pa1[$val]=$val;
+}}
+
+if($product['p2']!=NULL){ // Длина
+$par2=explode(";",$product['p2']);
+foreach($par2 as $key=>$val){ 
+if($val!='')$pa2[$val]=$val;
+}}
+
+if($product['p3']!=NULL){ // Цвет рамки
+$par3=explode(";",$product['p3']);
+foreach($par3 as $key=>$val){
+if($val!='')$pa3[$val]=$val;
+}}
+
+if($product['p4']!=NULL){ // Цвет основания
+$par4=explode(";",$product['p4']);
+foreach($par4 as $key=>$val){
+if($val!='')$pa4[$val]=$val;
+}}
+
+if($product['p5']!=NULL){ // Формат
+$par5=explode(";",$product['p5']);
+foreach($par5 as $key=>$val){
+if($val!='')$pa5[$val]=$val;
+}}
+
+if($product['p6']!=NULL){ // Высота
+$par6=explode(";",$product['p6']);
+foreach($par6 as $key=>$val){
+if($val!='')$pa6[$val]=$val;
+}}
+// /Всякие ссылки, фоны, цвета и прочая
+
+?>
+<!----------------------------------------------------------------------->
+<style>
+#container {
+  text-align: center;
+  width:400px;
+}
+#slider div {
+    text-align: center;
+  opacity: 0;
+  position: absolute;
+}
+#slider div.show {
+  opacity: 1;
+  z-index: 100;
+}
+#switch {
+  margin-top: 260px;
+}
+#switch img {
+  cursor: pointer;
+}
+#slider img {
+  width: 300px;
+}
+
+
+.wrap_descr{
+   text-align:left;
+   padding:2px; 
+}
+
+.caption_1{
+    font: 1.4em bold;
+    padding:0px 10px; 
+}
+.descr{
+    text-align:justify;
+    line-height:150%;
+}
+.price_1{
+    color:#b60909;
+    font: 1.8em bold;
+    padding:5px;   
+}
+
+</style>
+
+
+<!----------------------------------------------------------------------->
+
+
+<div class="title"><?=$product['caption_full']?></div>
+        <div class="br_10"></div>
+        <div class="left" style="width:55%;">
+            <div id="container">
+                <div id="slider">
+                    <h3>&nbsp;</h3>
+                    <div id="course_1" class="show"><a href="#"><img alt="" src="<?=$img1?>" /></a></div>
+                    <div id="course_2"><a href="#"><img alt="" src="<?=$img2?>" /></a></div>
+                    <div id="course_3"><a href="#"><img alt="" src="<?=$img3?>" /></a></div>
+                    <div id="course_4"><a href="#"><img alt="" src="<?=$img4?>" /></a></div>
+                    <div id="course_5"><a href="#"><img alt="" src="<?=$img5?>" /></a></div>
+                </div>
+                <div id="switch">
+                    <img data-number="1" alt="" src="<?=$img1?>" width="100" />
+                    <img data-number="2" alt="" src="<?=$img2?>" width="100" />
+                    <img data-number="3" alt="" src="<?=$img3?>" width="100" />
+                    <img data-number="4" alt="" src="<?=$img4?>" width="100" />
+                    <img data-number="5" alt="" src="<?=$img5?>" width="100" />
+                </div>
+            </div>
+
+        </div>    
+        <div class="wrap_descr left" style="width:40%;">
+            <div><h1><?=$product['caption_full']?></h1></div>
+            	<div class="inner-inline">
+	            	<div class="package">Упаковка: <?=$product['package']?></div>
+	            	<div class="article">Код: <?=$product['1Cid']?></div>
+	            </div>
+                <div class="br_10"></div>
+            	<div class="full">
+                    <div class="descr"><?=$product['description_full']?></div>
+                </div> 
+                <div class="br_10"></div>
+<!---------------------------- Цвет ------------------------------------->
+<?if($par1!=NULL){?>
+<div class="descr-item feature-select" style="margin-top:12px;">
+	<div class="caption_1">
+		<b>Доступные цвета:</b></div>
+	<div class="product-preview swatch">
+		<ul class="list horizont-orient">
+<?if($pa1[1]!=NULL){?>
+			<li class="item"><label for="p1_1" style="width: 25px;">
+			<input type="radio" id="p1_1" name="p1" value="<?=$pa1[1]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #ff0000; opacity: 0.8;" title="Красный"></div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa1[2]!=NULL){?>
+			<li class="item"><label for="p1_2" style="width: 25px;">
+			<input type="radio" id="p1_2" name="p1" value="<?=$pa1[2]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #0024ff; opacity: 0.8;" title="Синий">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa1[3]!=NULL){?>
+			<li class="item"><label for="p1_3" style="width: 25px;">
+			<input type="radio" id="p1_3" name="p1" value="<?=$pa1[3]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #18ff00; opacity: 0.8;" title="Зелёный">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa1[4]!=NULL){?>
+			<li class="item"><label for="p1_4" style="width: 25px;">
+			<input type="radio" id="p1_4" name="p1" value="<?=$pa1[4]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #ff9000; opacity: 0.8;" title="Оранжевый">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa1[5]!=NULL){?>
+			<li class="item"><label for="p1_5" style="width: 25px;">
+			<input type="radio" id="p1_5" name="p1" value="<?=$pa1[5]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #000000; opacity: 0.8;" title="Чёрный">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa1[6]!=NULL){?>
+			<li class="item"><label for="p1_6" style="width: 25px;">
+			<input type="radio" id="p1_6" name="p1" value="<?=$pa1[6]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #f0f1f3; opacity: 0.8;" title="Серебристый">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa1[7]!=NULL){?>
+			<li class="item"><label for="p1_7" style="width: 25px;">
+			<input type="radio" id="p1_7" name="p1" value="<?=$pa1[7]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #e4ff00; opacity: 0.8;" title="Салатовый">
+				</div>
+			</div>
+			</label></li>
+			<?}?>
+<?if($pa1[8]!=NULL){?>
+			<li class="item"><label for="p1_8" style="width: 25px;">
+			<input type="radio" id="p1_8" name="p1" value="<?=$pa1[8]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #; background-image: url('/index_files/img/features/transparent.png');" title="Прозрачный">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+		</ul>
+	</div>
+</div>
+<?}?>
+<!-------------------------------- /Цвет -------------------------------->
+<!-------------------------------- Длина -------------------------------->
+<?if($par2!=NULL){?>
+<div class="descr-item feature-select">
+	<div class="caption_1">
+		<b>Доступная длина:</b></div>
+	<div class="product-preview swatch">
+		<ul class="list vertical-orient">
+<?if($pa2[1]!=NULL){?>
+			<li class="item" style="margin-bottom: 7px;"><label for="p2_1">
+			<input type="radio" id="p2_1" name="p2" value="<?=$pa2[1]?>">
+			<div style="width: 100px; height: 20px;" class="frame_colo">
+				<div style="width: 100px; height: 20px; background-color: #eeeeee; opacity: 0.8;" align="right" title="100 см">
+					100 cm&nbsp; </div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa2[2]!=NULL){?>
+			<li class="item"><label for="p2_2">
+			<input type="radio" id="p2_2" name="p2" value="<?=$pa2[2]?>">
+			<div style="width: 125px; height: 20px;" class="frame_colo">
+				<div style="width: 125px; height: 20px; background-color: #eeeeee; opacity: 0.8;" align="right" title="125 см">
+					125 cm&nbsp; </div>
+			</div>
+			</label></li>
+<?}?>
+		</ul>
+	</div>
+</div>
+<?}?>
+<!------------------------------- /Длина --------------------------------> 
+<!-------------------------------- Цвет рамки ---------------------------> 
+<?if($par3!=NULL){?>                       			
+<div class="descr-item feature-select">
+	<div class="caption_1"><b>Цвет рамки:</b></div>
+	<div class="product-preview swatch">
+		<ul class="list horizont-orient">
+<?if($pa3[1]!=NULL){?>
+			<li class="item"><label for="p3_1" style="width: 25px;">
+			<input type="radio" id="p3_1" name="p3" value="<?=$pa3[1]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #ff0000; opacity: 0.8;" title="Красный">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa3[2]!=NULL){?>
+			<li class="item"><label for="p3_2" style="width: 25px;">
+			<input type="radio" id="p3_2" name="p3" value="<?=$pa3[2]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #0024ff; opacity: 0.8;" title="Синий">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa3[3]!=NULL){?>
+			<li class="item"><label for="p3_3" style="width: 25px;">
+			<input type="radio" id="p3_3" name="p3" value="<?=$pa3[3]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #18ff00; opacity: 0.8;" title="Зелёный">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa3[4]!=NULL){?>
+			<li class="item"><label for="p3_4" style="width: 25px;">
+			<input type="radio" id="p3_4" name="p3" value="<?=$pa3[4]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #ff9000; opacity: 0.8;" title="Оранжевый">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa3[5]!=NULL){?>
+			<li class="item"><label for="p3_5" style="width: 25px;">
+			<input type="radio" id="p3_5" name="p3" value="<?=$pa3[5]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #000000; opacity: 0.8;" title="Чёрный">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa3[6]!=NULL){?>
+			<li class="item"><label for="p3_6" style="width: 25px;">
+			<input type="radio" id="p3_6" name="p3" value="<?=$pa3[6]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #f0f1f3; opacity: 0.8;" title="Серебристый">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa3[7]!=NULL){?>
+			<li class="item"><label for="p3_7" style="width: 25px;">
+			<input type="radio" id="p3_7" name="p3" value="<?=$pa3[7]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #e4ff00; opacity: 0.8;" title="Салатовый">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa3[8]!=NULL){?>
+			<li class="item"><label for="p3_8" style="width: 25px;">
+			<input type="radio" id="p3_8" name="p3" value="<?=$pa3[8]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #; background-image: url('/index_files/img/features/transparent.png');" title="Прозрачный">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+		</ul>
+	</div>
+</div>
+<?}?>
+<!------------------------------- /Цвет рамки --------------------------->
+<!------------------------------- Цвет основания ------------------------>
+<?if($par4!=NULL){?>
+<div class="descr-item feature-select">
+<div class="caption_1"><b>Цвет основания:</b></div>
+	<div class="product-preview swatch">
+		<ul class="list horizont-orient">
+<?if($pa4[1]!=NULL){?>
+			<li class="item"><label for="p4_1" style="width: 25px;">
+			<input type="radio" id="p4_1" name="p4" value="<?=$pa4[1]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #ff0000; opacity: 0.8;" title="Красный">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa4[2]!=NULL){?>
+			<li class="item"><label for="p4_2" style="width: 25px;">
+			<input type="radio" id="p4_2" name="p4" value="<?=$pa4[2]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #0024ff; opacity: 0.8;" title="Синий">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa4[3]!=NULL){?>
+			<li class="item"><label for="p4_3" style="width: 25px;">
+			<input type="radio" id="p4_3" name="p4" value="<?=$pa4[3]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #18ff00; opacity: 0.8;" title="Зелёный">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa4[4]!=NULL){?>
+			<li class="item"><label for="p4_4" style="width: 25px;">
+			<input type="radio" id="p4_4" name="p4" value="<?=$pa4[4]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #ff9000; opacity: 0.8;" title="Оранжевый">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa4[5]!=NULL){?>
+			<li class="item"><label for="p4_5" style="width: 25px;">
+			<input type="radio" id="p4_5" name="p4" value="<?=$pa4[5]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #000000; opacity: 0.8;" title="Чёрный">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa4[6]!=NULL){?>
+			<li class="item"><label for="p4_6" style="width: 25px;">
+			<input type="radio" id="p4_6" name="p4" value="<?=$pa4[6]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #f0f1f3; opacity: 0.8;" title="Серебристый">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa4[7]!=NULL){?>
+			<li class="item"><label for="p4_7" style="width: 25px;">
+			<input type="radio" id="p4_7" name="p4" value="<?=$pa4[7]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #e4ff00; opacity: 0.8;" title="Салатовый">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+<?if($pa4[8]!=NULL){?>
+			<li class="item"><label for="p4_8" style="width: 25px;">
+			<input type="radio" id="p4_8" name="p4" value="<?=$pa4[8]?>">
+			<div style="width: 20px; height: 20px;" class="frame_colo">
+				<div style="width: 20px; height: 20px; background-color: #; background-image: url('/index_files/img/features/transparent.png');" title="Прозрачный">
+				</div>
+			</div>
+			</label></li>
+<?}?>
+		</ul>
+	</div>
+</div>
+<?}?>
+<!------------------------------- Цвет основания ------------------------>
+<!------------------------------- Формат ------------------------>
+<?if($par5!=NULL){?>
+<div class="descr-item feature-select">
+	<div class="caption_1">
+		<b>Выберите формат:</b></div>
+	<ul class="list horizont-orient">
+<?if($pa5[1]!=NULL){?>
+		<li class="item"><label for="p5_1">
+		<input type="radio" id="p5_1" name="p5" value="<?=$pa5[1]?>">
+		<div title="A8"><div style="text-align: center">
+		A8</div>
+		<img src="/index_files/img/features/format_A8.png" border="0"> </div>
+		</label></li>
+<?}?>
+<?if($pa5[2]!=NULL){?>
+		<li class="item"><label for="p5_2">
+		<input type="radio" id="p5_2" name="p5" value="<?=$pa5[2]?>">
+		<div title="A7"><div style="text-align: center">
+		A7</div>
+		<img src="/index_files/img/features/format_A7.png" border="0"> </div>
+		</label></li>
+<?}?>
+<?if($pa5[3]!=NULL){?>
+		<li class="item"><label for="p5_3">
+		<input type="radio" id="p5_3" name="p5" value="<?=$pa5[3]?>">
+		<div title="A6"><div style="text-align: center">
+		A6</div>
+		<img src="/index_files/img/features/format_A6.png" border="0"> </div>
+		</label></li>
+<?}?>
+<?if($pa5[4]!=NULL){?>
+		<li class="item"><label for="p5_4">
+		<input type="radio" id="p5_4" name="p5" value="<?=$pa5[4]?>">
+		<div title="A5"><div style="text-align: center">
+		A5</div>
+		<img src="/index_files/img/features/format_A5.png" border="0"> </div>
+		</label></li>
+<?}?>
+<?if($pa5[5]!=NULL){?>
+		<li class="item"><label for="p5_5">
+		<input type="radio" id="p5_5" name="p5" value="<?=$pa5[5]?>">
+		<div title="A4"><div style="text-align: center">
+		A4</div>
+		<img src="/index_files/img/features/format_A4.png" border="0"> </div>
+		</label></li>
+<?}?>
+<?if($pa5[6]!=NULL){?>
+		<li class="item"><label for="p5_6">
+		<input type="radio" id="p5_6" name="p5" value="<?=$pa5[6]?>">
+		<div title="A3"><div style="text-align: center">
+		A3</div>
+		<img src="/index_files/img/features/format_A3.png" border="0"> </div>
+		</label></li>
+<?}?>
+	</ul>
+</div>
+<?}?>
+<!------------------------------- /Формат ------------------------>
+<!------------------------------- Высота ------------------------>
+<?if($par6!=NULL){?>
+<div class="descr-item feature-select">
+	<div class="caption_1">
+		<b>Выберите высоту:</b></div>
+	<ul class="list horizont-orient">
+<?if($pa6[1]!=NULL){?>
+		<li class="item"><label for="p6_1">
+		<input type="radio" id="p6_1" name="p6" value="<?=$pa6[1]?>">
+		<div>
+			<div style="text-align: center">
+				0 mm.</div>
+			<img src="/index_files/img/features/footing_01.png" border="0" width="44" height="29">
+			<div style="background: url('/index_files/img/features/footing_02.png') repeat-y scroll 0 0 rgba(0, 0, 0, 0); width: 44px; height: 0px">
+			</div>
+			<img src="/index_files/img/features/footing_03.png" border="0" width="44" height="55">
+		</div>
+		</label></li>
+<?}?>
+<?if($pa6[2]!=NULL){?>
+		<li class="item"><label for="p6_2">
+		<input type="radio" id="p6_2" name="p6" value="<?=$pa6[2]?>">
+		<div>
+			<div style="text-align: center">
+				50 mm.</div>
+			<img src="/index_files/img/features/footing_01.png" border="0" width="44" height="29">
+			<div style="background: url('/index_files/img/features/footing_02.png') repeat-y scroll 0 0 rgba(0, 0, 0, 0); width: 44px; height: 50px">
+			</div>
+			<img src="/index_files/img/features/footing_03.png" border="0" width="44" height="55">
+		</div>
+		</label></li>
+<?}?>
+<?if($pa6[3]!=NULL){?>
+		<li class="item"><label for="p6_3">
+		<input type="radio" id="p6_3" name="p6" value="<?=$pa6[3]?>">
+		<div><div style="text-align: center">
+				100 mm.</div>
+			<img src="/index_files/img/features/footing_01.png" border="0" width="44" height="29">
+			<div style="background: url('/index_files/img/features/footing_02.png') repeat-y scroll 0 0 rgba(0, 0, 0, 0); width: 44px; height: 100px">
+			</div>
+			<img src="/index_files/img/features/footing_03.png" border="0" width="44" height="55">
+		</div>
+		</label></li>
+<?}?>
+	</ul>
+</div>
+<?}?>
+<!------------------------------- /Высота ------------------------>
+            		<div class="caption_1">
+                        Цена за комплект : 
+            		    <div class="price_1"><?=$price_roznica?></div>    
+            		    <div class="form">
+	            		<form method="POST" class="order wareItem">
+	                        <input style="width:50px;height:30px;text-align:right;color:#7b7b7b" name="" value="1" type="text"> x <?=$price_roznica?>
+	                        <div class="both br_10"></div>
+	                        <input value="В корзину" type="submit" class="btns">
+	                    </form>    
+            		</div>
+                </div>
+            </div>    
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</div>    
+<div class="both br_10"></div>
+<?include PATH_INC."/block_object.tpl.htm";?></div>
+
+<script type="text/javascript">
+  var course_delay = 500; // Задержка при смене блока
+  var course_delay_auto = 5000; // Время показа блока в автоматическом режиме
+  var course_active = 1; // Текущий активный блок
+  var course_count = $("#slider div[id^='course']").size(); // Количество блоков
+  var course_timer = setTimeout("setCourse(0)", course_delay_auto); // Включаем автоматическую смену блоков
+  $("#switch img").bind("click", function(event) {
+    setCourse($(event.target).attr("data-number")); // При клике по переключателю выводим соответствующий блок
+  });
+  function setCourse(number) {
+    if (number == course_active) return; // Если выбранный блок и так активен, то выходим из функции
+    var temp = course_active; // Сохраняем в temp старый активный блок
+    /* Получаем номер следующего активного блока */     if (number == 0) {
+      /* Если не был задан конкретный номер */       course_active++;
+      if (course_active > course_count) course_active = 1;
+    }
+    else course_active = number;
+    
+    $("#course_" + course_active).css({opacity: 0.0}).addClass("show").animate({opacity: 1.0}, course_delay); // Выводим новый блок
+    $("#course_" + temp).animate({opacity: 0.0}, course_delay, function () { // Прячем старый блок
+      clearTimeout(course_timer); // Выключаем таймер
+      course_timer = setTimeout("setCourse(0)", course_delay_auto); // Включаем таймер
+    }).removeClass("show");
+  }
+</script>

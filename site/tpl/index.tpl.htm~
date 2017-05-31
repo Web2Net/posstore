@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
+<title><?=$meta["title"]?></title>
+<meta name="description" content="<?=$meta["description"]?>" />
+<meta name="keywords" content="<?=$meta["keywords"]?>" />
+<link media="all" href="/design/css/site-main.css" type="text/css" rel="stylesheet"/>
+
+<script type="text/javascript" src="/design/js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="/design/js/jquery.jcarousellite.js"></script>
+
+
+<script type="text/javascript" src="/lib/slimbox/js/slimbox2.js"></script>
+<link rel="stylesheet" href="/lib/slimbox/css/slimbox2.css" type="text/css" media="screen" />
+
+<script type="text/javascript" src="/design/js/debug.js"></script>
+
+<!-- form_feedback -->
+<link rel="stylesheet" href="<?=PATH_SITE_DESIGN?>/form_feedback/style.css">
+<script src="<?=PATH_SITE_DESIGN?>/form_feedback/form_feedback.js"></script>
+<!-- /form_feedback -->
+
+<!-- search_live -->
+<link rel="stylesheet" href="<?=PATH_SITE_DESIGN?>/search_live/jquery-ui.css">
+<script src="<?=PATH_SITE_DESIGN?>/search_live/jquery-ui.js"></script>
+
+<script>
+  $(function() {
+    var availableTags = [
+"Рамка",
+"Рамки на тележки",
+"Стойки рамок",
+"Универсальные держатели",
+"Держатели-подставки",
+"Магнитные держатели",
+"Подвесные держатели",
+"Держатели на сетки",
+"Держатели на трубы",
+"Держатели на ящики",
+"Ценникодержатели прищепки",
+"Ценникодержатели зажимы",
+"Ценникодержатели на подставках",
+"Иголка",
+"Ценникодержатели для колбас",
+"Ценникодержатели на бутылки",
+"Подставки из акрила",
+"Подставки из ПВХ",
+"Кассеты",
+"Полочные ценникодержатели",
+"Разделители",
+"Плакаты",
+"Подвесная система",
+"Воблеры и стопперы",
+"Карманы",
+"Таблички и маркеры",
+"Для импульсных покупок",
+"Антикражные средства",
+"Покупательские корзины",
+"Клик-рамы"
+<?
+/*
+$key_words = Search::getKeyWordsForLiveSearch();
+if($key_words != NULL)
+{
+    foreach($key_words as $key=>$word)
+    {
+	    echo '"'.$word['caption_full'].'",';	
+	}	
+}
+*/
+?>
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
+</script>
+<!-- /search_live -->
+
+
+
+</head>
+<body>
+
+<div id="body" align="center">
+
+<div id="masthead" class="polosa">
+
+<table style="width: 1020px;height:100px;" cellpadding="0" cellspacing="0"><tr>
+<td valign="middle" width="240" style="padding-bottom:18px;">
+
+<div class="logo" style="margin-top:18px;">
+<?if($_SERVER['REQUEST_URI'] != '/'){?>
+<a href="/" style="display:block;height:100%">&nbsp;</a>
+<?}?></div>
+
+</td><td valign="middle" style="padding-left:12px;">
+
+<!-- ****************search****************** -->
+            <div class="search" style="margin-bottom:0px;">
+                <div class="ui-widget" style="padding-top:7px;">
+                    <form action="/search/" method="POST">
+                    <!--<label for="tags"></label>-->
+                        <input id="tags" type="text" value="" placeholder="Поиск" name="search_input" class="search" />
+                        <input type="submit" style="border:0px solid white;box-shadow:none;margin-left:1px;" value="" />
+                    </form>
+                </div>
+            </div> 
+<!-- *****************/search***************** -->
+
+</td><td valign="middle" style="padding-right:15px;">
+
+<div class="on-line" align="center">
+<div style="margin-bottom:3px;"><span>Свяжитесь с нами по телефонам:</span></div>
+<div style="margin-bottom:3px;"><span class="bold red" style="font-size:14px;font-family:tahoma;">+38 (044) 500-16-73</span></div>
+<div style="margin-bottom:3px;">
+<a class="show_feedback_popup" rel="form_feedback" href="#">Online запрос</a></div>
+<!-------------------------------------------------------->
+<?include PATH_INC."/form_feedback.tpl.htm"?>
+<!-------------------------------------------------------->        
+<div>
+<a href="/art/page/info/3-kontakty">Контакты</a></div>
+</div>
+</td><td style="background-color:white;" width="255">
+<script>
+
+$(document).ready(function(){
+$("#cart").load('/cart/incart/?display=ajax');
+});
+
+
+function inCart(){
+var item=$("#item").attr("value")+'/'+$("#hm").attr("value");
+//alert(item);
+$("#cart").load('/cart/incart/'+item+'?display=ajax');
+}
+function inCart2(id,hm){
+var item=id+'/'+hm;
+//alert(item);
+$("#cart").load('/cart/incart/'+item+'?display=ajax');
+}
+
+function inCartBuy(id,hm){
+var vhm=$("#vhm_"+id).attr("value");
+//alert(vhm);
+vhm=parseInt(vhm)+parseInt(hm);
+
+if(vhm>0){
+//var Boo=document.getElementById("cart_"+id);
+//Boo.value=parseInt(vhm);
+//$("#cart_"+id).attr("value",vhm);
+$("#cart_"+id).val(vhm);
+var price=$("#buyprice_"+id).val();
+var fprice=parseFloat(price)*parseInt(vhm);
+var fprice2=fprice.toFixed(2);
+var price_arr=fprice2.split('.');
+fprice2=price_arr[0]+".<font>"+price_arr[1]+"</font>";
+if(fprice==0){fprice2='По запросу';}
+$("#fullprice_"+id).html(fprice2);
+
+$("#cart").load('/cart/incart/'+id+'/'+hm+'?display=ajax');
+}}
+
+function inCartDel(id){
+$("#cart").load('/cart/incart/'+id+'/del?display=ajax');
+$("#cartItem_"+id).remove();
+}
+
+function inCartBuy2(id,hm){
+if (hm<1) {hm=1;}
+if (hm>999) {hm=999;}
+var vhm=$("#vhm_"+id).attr("value");
+var hmn=-1*parseInt(vhm);
+
+if(hm>0){
+$("#cart_"+id).val(hm);
+
+var price=$("#buyprice_"+id).val();
+var fprice=parseFloat(price)*parseInt(hm);
+var fprice2=fprice.toFixed(2);
+var price_arr=fprice2.split('.');
+fprice2=price_arr[0]+".<font>"+price_arr[1]+"</font>";
+if(fprice==0){fprice2='По запросу';}
+$("#fullprice_"+id).html(fprice2);
+
+$("#cart").load('/cart/incart/'+id+'/'+hmn+'?display=ajax');
+$("#cart").load('/cart/incart/'+id+'/'+hm+'?display=ajax');
+}
+}
+
+</script>
+<ul class="user-menu list">
+<li id="cart"><a class="cart" href="/cart/buy">Корзина</a></li>
+<li><a class="pay" href="/art/page/info/5-oplata">Оплата</a></li>
+<li><a class="delivery" href="/art/page/info/1-dostavka">Доставка</a></li>
+</ul>
+
+</td>
+</tr></table>
+
+
+</div>
+<div id="container">
+	<div id="left_col">
+	<?=$shop_menu?>
+	                        <div class="catalog" align="left">
+                            <a href="/userfiles/files/catalog/em4v9V8.pdf" target="_blank" class="view" style="">
+					            <span class="inl"></span>
+					            <span class="inl-block">Посмотреть каталог Online</span>
+				            </a>
+				        </div>
+
+	<br><br><br><br><br><br>
+	</div>
+	<div id="page_content"><div style="margin:0px 0px 0px 12px;">
+	<?=$c_cont?>
+	</div></div>
+</div>
+<div id="footer" class="polosa2">
+
+    <div style="width:1000px;margin:0 auto;">
+    <table width="97%"><tr><td width="40%" style="padding:12px;">
+    <div class="footer_menu">
+        <div>
+            <span class="bold inline"><span>© 2013 ООО «</span><span class="red"><?=SITE_NAME?></span><span>»</span></span><br>
+            <span><?=CONTACT_ADRESS?></span><br>
+        </div><br>
+        <table><tr><td>
+            <span class="red">Звоните по телефону: </span><br>
+            <span><?=CONTACT_TEL_OFFICE?></span><br>
+            <span><?=CONTACT_TEL_MOB?></span>
+        </td><td style="padding-left:12px;">
+            <span class="red">Пишите на e-mail:<br>
+            <a href="mailto:<?=EMAIL_BOSS?>"> <?=EMAIL_BOSS?></a></span><br>
+            <span class="red">Skype:</span> <?=CONTACT_SKYPE?>
+        </td></tr></table>
+    </div>
+    </td><td width="22%" style="padding:20px;line-height:20px;" class="linkarea">
+            <a href="/art/page/info/2-o-kompanii">О компании</a><br>
+			<a href="/art/page/info/3-kontakty">Контакты</a><br>
+			<a href="/art/page/info/4-karta-proezda">Карта проезда</a><br>
+			<a href="/gallery">Фотогалерея</a><br>
+</td><td style="padding:20px;" class="linkarea">
+            <a href="/shop">Каталог</a><br>
+			<a href="/price">Прайс лист</a><br>
+			<a href="/art/page/info/6-usloviya-zakaza">Условия заказа</a><br>
+			<a href="/art/page/info/1-dostavka">Доставка</a><br>
+</td></tr></table>
+</div>
+
+
+</div>
+
+</div>
+
+
+
+        
+<div id="debug" style="height:1px;position:absolute;z-index:7;top:30px;right:5px;" align="right"><?=$GLOBALS['DEBUG']?></div>
+<div id="debug_sql" style="height:1px;position:absolute;z-index:7;top:30px;left:5px;" align="left"><?=$GLOBALS['DEBUG_SQL']?></div>
+
+</body>
+
+</html>

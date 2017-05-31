@@ -1,0 +1,99 @@
+<script type="text/javascript" language="JavaScript">
+function aDel(param,value) {
+  document.getElementById(param).style.display = 'none';  
+  document.getElementById("shopping").innerHTML = '...';  
+   JsHttpRequest.query(
+      '<?=SITE_URL?>/?mod=ajax&param=shoppingminus',
+      { 
+        'data': value,
+      },
+      function(result, errors) {
+    document.getElementById("shopping").innerHTML = result['q']; 
+    document.getElementById("totalprice").innerHTML = result['r'];  }   
+      ,
+ false
+    );
+        
+  } 
+</script>
+
+
+<div class="title">Корзина</div>
+<div class="both br_10"></div>
+<div class="title_1">
+    <div style="float:left;width:250px;text-align:center;" class="bor">Товар</div>
+    <div style="float:left;width:100px;text-align:center;">Упаковка</div>
+    <div style="float:left;width:100px;text-align:center;">Код</div>
+    <div style="float:left;width:75px;text-align:center;">Кол-во</div>
+    <div style="float:left;width:100px;text-align:center;">Сумма</div>
+    <div style="float:left;width:100px;text-align:center;">Править</div>
+</div>        
+<div style="both"></div>
+<?
+SYS::varDump($shopping_list,__FILE__,__LINE__,"shopping_list");
+if($shopping_list!=NULL){
+$totalprice=0;
+foreach($shopping_list as $key=>$val){
+    
+    $image = (file_exists("/product-image/{$val['id']}/{$val['img']}") && filesize("/product-image/{$val['id']}/{$val['img']}") !== 0) ? PATH_IMG_ITEMS."/{$val['id']}/{$val['img']}" : PATH_IMG."/noimage.png";
+    $price_roznica = Price::getPrice($val['postavschik'],$val['price_roznica'],$val['price_diler'],$val['ddp']);?>
+    
+
+
+
+<table style="width: 100%; border-collapse: collapse;" cellpadding="0" cellspacing="0" class="shopping_list">
+
+
+	<tr id="<?=$val['1Cid']?>-<?=strtotime($val['date'])?>">
+		<td style="border-left:none">
+		<table cellpadding="0" cellspacing="0"><tr><td style="border:none;">
+		<a href="<?=SITE_URL?>/shop/catalog/product/<?=$val['1Cid']?>/<?=Text::cirilToLatin($val['brand'])?>-<?=Text::cirilToLatin($val['caption_full'])?>.html" style="line-height:15px;">
+
+
+		
+		</a>
+		</td><td style="border:none;">
+		<?=$val['brand']?><br>
+		<a href="<?=SITE_URL?>/shop/catalog/product/<?=$val['1Cid']?>/<?=Text::cirilToLatin($val['brand'])?>-<?=Text::cirilToLatin($val['caption_full'])?>.html" style="line-height:15px;">
+        <?=$val['caption_full']?></a><br>
+        <?=$val['subcategory']?>
+
+        </td></tr></table>
+        </td>
+		<td><?=$val['pcount']?></td>
+		<td>
+<?$price_roznica = Price::getPrice($val['postavschik'],$val['price_roznica'],$val['price_diler'],$val['ddp']);?>
+<?=$price_roznica?> гривен</td>
+		<td style="background-color: #D7DDFE"><?=$val['allprice']?> гривен</td>
+		<td style="border-right:none">
+		<?if($param!='order'){?>
+		<form method="post" id="<?=strtotime($val['date'])?>-<?=$val['1Cid']?>" enctype="multipart/form-data" onsubmit="return false">
+		<input type="hidden" name="prodid" value="<?=$val["1Cid"]?>">
+		<input type="hidden" name="shoppingdate" value="<?=$val["date"]?>">		
+		<img src="/index_files/delete.png" width="17" align="left">&nbsp;
+		<a href="javascript:aDel('<?=$val['1Cid']?>-<?=strtotime($val['date'])?>',document.getElementById('<?=strtotime($val['date'])?>-<?=$val['1Cid']?>'))" style="">Удалить</a></td>
+	    </form>
+	    <?}?>
+	</tr>
+
+<?
+$totalprice=$totalprice+$val['allprice'];
+}}?>
+	<tr>
+		<td>&nbsp;</td>
+		<td></td>
+		<td>Общая стоимость: </td>
+		<td style="background-color: #D7DDFE"><b><span id="totalprice"><?=$totalprice?></span> гривен</b></td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+<?if($param!='order'){?>
+<div style="padding:15px 15px 20px 60px;" id="result">
+<a href="<?=$catpage!=""?$catpage:"/"?>" class="button">
+Продолжить покупки</a>&nbsp;&nbsp;&nbsp;
+<?if($param!='login'){?><a<?if($shopcounttext!="Ваша корзина пуста"){?> href="<?=SITE_URL?>/shop/shopping/login.html"<?}?> class="button">
+Оформить заказ</a><?}?></div><?}?>
+</div>
+
+<?if(count($shopping_list)<3){?>
+<br><br><br><br><br><br><br><br><?}?>

@@ -1,0 +1,72 @@
+<?
+//SYS::varDump($param,__FILE__,__LINE__);
+$categ = Menu::getBreadCrumbs($param[2]);
+?>
+<?//include PATH_INC."/breadcrumbs.tpl.htm"?>
+<div class="title"><?=$categ[0]['caption']?></div>
+<div class="both br_5"></div>
+<div class="main">
+    <div class="reducer">
+        <div class="items_grid" style="clear: none;">
+
+<?if($cat_list!=NULL){
+foreach($cat_list as $key=>$val){
+// Всякие ссылки, фоны, цвета и прочая
+unset($price_roznica);
+$image = (file_exists("/product-image/{$val['id']}/{$val['img']}") && filesize("product-image/{$val['id']}/{$val['img']}") !== 0) ? PATH_IMG_ITEMS."/{$val['id']}/{$val['img']}" : PATH_IMG."/noimage.png";
+$link_to_page = "/shop/catalog/".$categ[0]['seolink']."/".$val['id']."-15-1/".Text::cirilToLatin($val['caption']).".html";
+$description = ($val['description'] !== "") ? $val['description'] : "";
+// /Всякие ссылки, фоны, цвета и прочая
+?>
+
+
+
+
+         <div class="item">
+            <div class="angle"><h2><a href="<?=$link_to_page?>"><?=$val['caption']?></a></h2></div>
+            <div class="r">
+                <div class="r_inner">
+                    <div class="preview">
+                        <a type="common" href="<?=$link_to_page?>">
+                            <div class="reducer">
+                                <div style="padding-top: 12px;"><img src="<?=$image?>" alt="<?=$val['caption']?>" width="150" /></div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                
+                    <div class="summary">
+						<b><?=$val['caption']?></b><br />
+						<?=Text::cutStr($val['description'],15)?>
+					</div>
+                 
+                    </div>
+                </div>
+<!-- end r -->
+                <div class="min">&nbsp;</div>
+            </div>
+
+        
+
+
+<!--
+    <li class="item ware">
+        <div class="image">
+		    <a href="<?=$link_to_page?>">
+			    <img src="<?=$image?>" style="width:150px">
+			</a>
+		</div>
+        <div class="both br_5"></div>
+        <div class="title"><a href="<?=$link_to_page?>"><?=$val['caption']?></a></div>
+        <div class="both br_5"></div>
+        <div><?//=$description?></div>
+    </li>
+ -->
+<?}}?>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+</div>    
+<?//=$val['caption']?>
+<!-- </ul>  -->  
+<?//include PATH_INC."/sortirovschik_bottom.tpl.htm"?>                  

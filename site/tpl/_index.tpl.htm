@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta name="google-site-verification" content="ruDMxedDym4OLPbnqkbYaaOlXsRDdBLzv0EK7Z5ybMc" />
+<meta name='yandex-verification' content='480c697ed96af286' />
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title><?=$meta["title"]?></title>
+<meta http-equiv="content-language" content="ru" />
+<meta name="DC.Language" content="ru" />
+<meta name="Subject" content="" />
+<meta name="Resource-type" content="Document" />
+<meta name="Document-state" content="Dynamic" />
+<meta name="MSSmartTagsPreventParsing" content="TRUE" />
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+<meta name="Expires" content="never" />
+<meta name="Publisher-URL" content="<?=SITE_URL?>/" />
+<meta http-equiv="Rating" content="General" />
+<meta name="Geography" content="" />
+<meta name="city" content="Kiev" />
+<meta name="country" content="Ukraine" />
+<meta name="zipcode" content="" />
+<meta name="author" content=".you" />
+<meta name="Copyright" content="<?=SITE_NAME?>" />
+<meta name="Publisher" content="<?=SITE_NAME?>" />
+<meta http-equiv="reply-to" content="<?=EMAIL_BOSS?>" />
+<meta name="description" content="<?=$meta['description']?>" />
+<meta name="keywords" content="<?=$meta['keywords']?>" />
+
+<link rel="icon" href="/favicon.ico" type="images/x-icon" />
+<link rel="shortcut icon" href="/favicon.ico" type="images/x-icon" />
+<!-- Scroll To Top -->
+	<script src="<?=PATH_DESIGN?>/scrolltotop/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=PATH_DESIGN?>/scrolltotop/scrollTo.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?=PATH_DESIGN?>/scrolltotop/scrolltotop.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="<?=PATH_DESIGN?>/scrolltotop/scrolltotop.css" type="text/css" media="screen" />
+<!-- /Scroll To Top --> 
+
+<script type="text/javascript" src="<?=PATH_DESIGN?>/highslide/highslide.js"></script>
+<link rel="stylesheet" type="text/css" href="<?=PATH_DESIGN?>/highslide/highslide.css" />
+<script type="text/javascript">
+hs.graphicsDir = '<?=PATH_DESIGN?>/highslide/graphics/';
+hs.wrapperClassName = 'wide-border';
+</script>
+   
+<!-- <script type="text/javascript" src="<?=SITE_URL?>/lib/jQuery/jquery-1.4.min.js"></script> -->
+<script type="text/javascript" src="<?=SITE_URL?>/lib/jQuery/jquery.innerfade.js"></script>
+<script src="<?=SITE_URL?>/lib/JsHttpRequest/lib/JsHttpRequest/JsHttpRequest.js"></script>
+<script type="text/javascript" src="<?=SITE_URL?>/lib/slimbox/js/slimbox2.js"></script>
+<link rel="stylesheet" href="<?=SITE_URL?>/lib/slimbox/css/slimbox2.css" type="text/css" media="screen" />
+
+<link rel="stylesheet" href="<?=SITE_URL?>/site/design/css/main.css" type="text/css" media="screen" />
+<!-- MegaMenu -->
+<script type="text/javascript" src="<?=PATH_DESIGN?>/megamenu/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="<?=PATH_DESIGN?>/megamenu/jkmegamenu.css" />
+<script type="text/javascript" src="<?=PATH_DESIGN?>/megamenu/jkmegamenu.js"></script>
+<!-- /MegaMenu -->
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+$('ul#slidefoto').innerfade({
+        speed: 1000,
+        timeout: 5000,
+        type: 'sequence',
+        containerheight: '327px'
+        });
+
+});
+
+</script>
+
+<script type="text/javascript">
+function searchCompass(vkl){
+if(vkl=='on'){document.getElementById("kompass").src = "/index_files/kompas1.gif";
+}else{
+document.getElementById("kompass").src = "/index_files/kompas2.gif";
+}
+}
+
+</script>
+
+</head>
+<body id="box">
+    <div id="top"></div>
+    <div align="center">
+        <div class="polosa_r">
+            <div class="polosa_l">
+                <div class="wrap_page">
+                    <?include PATH_INC."/top.tpl.htm"?>    
+                    <div class="both br_10 polosa"></div>
+                    <div class="wrap_menu_main"><nobr><?=$main_menu?></nobr></div>
+                    <div class="both br_10 polosa"></div>
+                    <?=$page?>
+                    <div class="wrap_bottom"><?include PATH_INC."/bottom.tpl.htm"?></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?include PATH_INC."/counts.tpl.htm"?>
+    <?include PATH_INC."/block_ear_cart.tpl.htm"?> 
+    <?include PATH_INC."/help_online.tpl.htm"?>   
+    <div id="message"><a href="#top" id="top-link">Вверх</a></div>
+</body>
+</html>

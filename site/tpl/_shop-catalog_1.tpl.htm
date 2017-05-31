@@ -1,0 +1,208 @@
+<script type="text/javascript" language="JavaScript">
+
+function aShopSend(param,value) 
+{
+
+//alert(param);
+
+    if(param=='shoppingplus')
+    {
+        document.getElementById("shopping").innerHTML = '...';  
+    }   
+    JsHttpRequest.query(
+
+    '<?=SITE_URL?>/?mod=ajax&param='+param,
+    { 
+       'data': value,
+    },
+    function(result, errors) 
+    {
+        if(param=='shoppingplus')
+        {  
+            document.getElementById("shopping").innerHTML = result['q']; 
+            document.getElementById("rukzak").src = "/index_files/rukzak2.gif";
+            //document.getElementById("result").innerHTML = result['r'];  
+        }   
+    },
+    false
+    );
+    document.getElementById("return").innerHTML = '<a href="<?=PAGE_REF?>"> «« Вернуться </a>';       
+}
+ 
+function sortBy(sortby)
+{
+//alert(sortby);
+    window.location.href="<?=SITE_URL?>/shop/catalog/<?=$param[0]?>/<?=$prm[0]?>-<?=$prm[1]?>-<?=$prm[2]?>-" + sortby + "-<?=$prm[4]?>/<?=$param[2]?>.html";
+}  
+  
+</script>
+
+<style>
+.grid .list-product {
+	width: 158px;
+	padding: 4px;
+	height: 253px;
+	float: left;
+	overflow: hidden;
+	border: 1px solid #D9D9D9;
+	margin:-1px 0px 0px -1px;
+}
+.list .list-product {
+width: 100%;
+border-top: 1px solid #D9D9D9;
+border-bottom: 1px solid #D9D9D9;
+margin-bottom:-1px;
+}
+.list, .grid {
+width: 100%;
+margin:4px 0px;
+}
+.grid .list-product .hide-desc {
+	display: none;
+}
+
+table.grid, table.list {
+	padding: 0px;
+	border-spacing: 0px;
+}
+.grid div, .grid td{
+  text-align:center;
+}
+.list .list-product {
+float:left;
+}
+.catalog-list-image{
+	float:left;
+    padding:5px 10px 5px 0px;width:100px	
+}
+.toolbar-list {
+	background: url('/index_files/icon_view_list.gif') no-repeat left 7px;
+	margin-left: 12px;
+	padding: 4px 0px 0px 14px;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.toolbar-grid {
+	background: url('/index_files/icon_view_grid.gif') no-repeat left 7px;
+	margin-left: 12px;
+	padding: 4px 0px 0px 14px;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.catalog-list-price_usd{
+color:#000;
+/*font-weight:bold;*/
+}
+.catalog-list-price_grn{
+color:#198F00;
+font-weight:bold;
+font-size: 18px;
+}
+.catalog-list-oldprice{
+color:#D9001F;
+font-weight:bold;
+text-decoration: line-through;
+}
+.catalog-list-price_grey{
+color:#ccc;
+font-weight:bold;
+font-size: 18px;
+}
+.filterlist{
+margin:0px 0px 7px 0px;
+}
+.filterlist div b{
+display:block;
+padding:7px 0px 0px 0px;
+font-family:Verdana;
+font-size:11px;
+margin:0px 0px 3px 0px;
+}
+.text_grey{
+    color:#ccc;font-size:12px
+}
+.text_black{
+    color:#000;font-size:12px
+}
+.text_red{
+    color:#d12;font-size:12px
+}
+.text_green{
+    color:green;font-size:13px
+}
+</style>
+
+<table cellspacing="0" cellpadding="0" style="width: 1000px; border-collapse: collapse; margin-right: 7px; margin-left: 7px; margin-top: 3px;">
+	<tr>
+    	<td style="padding:0px 4px 0px 3px;">
+            <?//=$mess?>		
+            <?include PATH_INC."/breadcrumbs.tpl.htm"?>
+            <?include PATH_INC."/sortirovschik_top.tpl.htm"?>
+            <div id="productView" class="<?=$liststyle=="list"?"list":"list"?>" style="padding-left: 7px;">
+<?//SYS::varDump($cat_list)?>
+<?if($cat_list!=NULL){
+foreach($cat_list as $key=>$val){
+// Всякие ссылки, фоны, цвета и прочая
+$image = (file_exists("product-image/{$val['id']}/{$val['img']}") && filesize("product-image/{$val['id']}/{$val['img']}") !== 0) ? PATH_IMG_ITEMS."/{$val['id']}/{$val['img']}" : PATH_IMG."/noimage.png";
+$nalichie = ($val['nalichie'] == "-") ? "<div class='catalog-list-price_grey'>Нет в наличии</div>" : "";
+$div_class = ($val['nalichie'] == "-" || $val['nalichie'] == "arch") ? "catalog-list-price_grey" : "catalog-list-price_grn";
+$point = ($val['ddp'] == "1") ? "." : "";
+$link_to_itim_page = SITE_URL."/shop/catalog/product/".$val['id']."/".Text::cirilToLatin($val['brand'])."-".Text::cirilToLatin($val['caption_full']).".html";
+$description_short = ($val['description_short'] !== "") ? $val['description_short'] : "";
+$price_roznica = Price::getPrice($val['postavschik'],$val['price_roznica'],$val['price_diler'],$val['ddp']);
+$free_dostavka = ($price_roznica>MIN_SUMMA_DOSTAVKI) ? "<div class='text_green'>Бесплатная доставка</div>" : "";
+$price_roznica = ($price_roznica == "0" || $price_roznica == "0.00")? "По запросу" : $price_roznica." ".CURRENCY;
+
+// /Всякие ссылки, фоны, цвета и прочая
+?>
+            <table class="list-product">
+                <tr>
+                    <td style="width:100px;vertical-align:middle">
+                        <div><strong><?=ucfirst($val['brand'])?><?=$point?></strong></div>
+                        <a href="<?=$link_to_itim_page?>">
+                            <img src="<?=$image?>" alt="" class="catalog-list-image" />
+                        </a>
+                    </td>
+                    <td style="text-align:left">
+                        <div style="color:#ccc;font-weight:900">
+                            <?=$val['1Cid']?><br /> 
+                            <a href="<?=$link_to_itim_page?>" style="line-height:15px;">
+                                <?=$val['caption_full']?>  
+                            </a><br />
+                            <?=$description_short?>                               
+                        </div>
+                        <?=$free_dostavka?>
+                    </td>
+                    <td style="width:120px;vertical-align:top;text-align:right">
+                        <form method="post" id="<?=$val['1Cid']?>" enctype="multipart/form-data" onsubmit="return false">
+                            <input type="hidden" name="prodid" value="<?=$val["1Cid"]?>">
+                            <table style="width:100%">
+	                            <tr>
+	                                <td style="vertical-align:middle;text-align:right">
+<?if($val['nalichie'] == "+" || $val['nalichie'] == "r"){?>
+            		                    <input name="pcount" type="text" maxlength="5" size="5" value="1" />
+                                    </td>
+		                            <td style="text-align:right">
+		                                <a id="shoppingplus" href="javascript:aShopSend('shoppingplus',document.getElementById('<?=$val["1Cid"]?>'))">
+                                            <img  src="<?=PATH_IMG?>/cart.png" style="width:30px" />
+                                        </a>
+<?}else{?> 
+                                        <br /> 
+<?}?>
+                                    </td>
+	                            </tr>
+                            </table>
+                        </form>
+                        <div class="both br_10"></div>
+                        <div class="<?=$div_class?>"><?=$price_roznica?></div>
+                        <!--<div style="padding:4px;font-size: 10px;">Безналичный расчет с НДС.</div>-->
+                    </td>
+                </tr>
+            </table>
+<?}}?>
+            <div style="clear: both;"></div>
+		</td>
+	</tr>
+</table>
+<?include PATH_INC."/sortirovschik_bottom.tpl.htm"?>

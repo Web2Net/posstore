@@ -1,0 +1,142 @@
+<style>
+.catalog-list-price{
+color:#198F00;
+font-weight:bold;
+}
+.catalog-list-oldprice{
+color:#D9001F;
+font-weight:bold;
+text-decoration: line-through;
+}
+.vitrina{
+font-family:verdana;
+font-size:11px;
+}
+.vitrina .catalog-list-image{
+border-top:1px solid #EBC562;
+border-right:1px solid #FFE06C;
+border-bottom:1px solid #FFE06C;
+border-left:1px solid #EBC562;
+padding:1px;
+}
+
+</style>
+		<div>
+		
+<div><ul id="slidefoto">					
+
+<?foreach($imagecode as $key=>$val){?>
+  <li><img alt="" src="/index_files/main<?=$val?>.jpg" width="805" height="327" />
+<?}?>
+
+</ul></div>
+			<table style="width: 100%;margin-top:3px;" cellpadding="0" cellspacing="0">
+				<tr>
+					<td valign="top">
+					<div style="height: 39px; background-image: url('/index_files/bg_top_sale.png'); background-repeat: repeat-x; margin-right: 3px; border-right-style: solid; border-right-width: 1px; border-right-color: #c2570f;" align="center">
+						<span style="font-size:22pt">Лидеры продаж</span></div>
+					<table style="width: 100%; border-collapse: collapse;" cellpadding="0" cellspacing="0">
+						<tr>
+							<td style="width: 33%;" align="center">
+							<div class="vitrina" align="center" style="padding:0px 10px 0px 10px;">
+<?if($hitbox1!=NULL){?>
+<table class="list-product"><tr><td align="center">
+<table><tr><td style="vertical-align:middle;height: 85px;overflow:hidden;" valign="middle">
+<a href="<?=SITE_URL?>/shop/catalog/product/<?=$hitbox1['1Cid']?>/<?=Text::cirilToLatin($hitbox1['brand'])?>-<?=Text::cirilToLatin($hitbox1['name'])?>.html">
+<img src="<?=$hitbox1['thumbnail']!=""?$hitbox1['thumbnail']:"/index_files/noimage.jpg"?>" alt="<?=$hitbox1['name']?>" class="catalog-list-image" width="85">
+</a>
+</td></tr></table>
+<div class="catalog-list-brand"><?=$hitbox1['brand']?></div>
+<div>
+<a href="<?=SITE_URL?>/shop/catalog/product/<?=$hitbox1['1Cid']?>/<?=Text::cirilToLatin($hitbox1['brand'])?>-<?=Text::cirilToLatin($hitbox1['name'])?>.html" style="line-height:15px;text-decoration:none;color:#00539A;font-family:Verdana;font-size:12px;">
+<b><?=$hitbox1['name']?></b></a></div>
+
+<?if($hitbox1['newprice']!=0){?><div class="catalog-list-oldprice">Цена: <?=$hitbox1['price']?> грн.</div>
+<div class="catalog-list-price">Новая цена: <?=$hitbox1['newprice']?> грн.</div>
+<?}else{?>
+<div class="catalog-list-price">Цена: <?=$hitbox1['price']?> грн.</div>
+<?}?>
+<?if($hitbox1['price']>300 || $product['newprice']>300){?><div class="free-dostavka">Бесплатная доставка</div><?}?>
+</td></tr></table>
+<?}?>
+							</div>
+							</td>
+							<td style="width: 33%;" align="center">
+							<div class="vitrina" align="center" style="padding:0px 10px 0px 10px;">
+<?if($hitbox2!=NULL){?>
+<table class="list-product"><tr><td align="center">
+<table><tr><td style="height:85px;overflow:hidden;vertical-align:middle;" valign="middle">
+<a href="<?=SITE_URL?>/shop/catalog/product/<?=$hitbox2['1Cid']?>/<?=Text::cirilToLatin($hitbox2['brand'])?>-<?=Text::cirilToLatin($hitbox2['name'])?>.html">
+<img src="<?=$hitbox2['thumbnail']!=""?$hitbox2['thumbnail']:"/index_files/noimage.jpg"?>" alt="<?=$hitbox2['name']?>" class="catalog-list-image" width="85">
+</a>
+</td></tr></table>
+<div class="catalog-list-brand"><?=$hitbox2['brand']?></div>
+<div>
+<a href="<?=SITE_URL?>/shop/catalog/product/<?=$hitbox2['1Cid']?>/<?=Text::cirilToLatin($hitbox2['brand'])?>-<?=Text::cirilToLatin($hitbox2['name'])?>.html" style="line-height:15px;text-decoration:none;color:#00539A;font-family:Verdana;font-size:12px;">
+<b><?=$hitbox2['name']?></b></a></div>
+
+<?if($hitbox2['newprice']!=0){?><div class="catalog-list-oldprice">Цена: <?=$hitbox2['price']?> грн.</div>
+<div class="catalog-list-price">Новая цена: <?=$hitbox2['newprice']?> грн.</div>
+<?}else{?>
+<div class="catalog-list-price">Цена: <?=$hitbox2['price']?> грн.</div>
+<?}?>
+<?if($hitbox2['price']>300 || $product['newprice']>300){?><div class="free-dostavka">Бесплатная доставка</div><?}?>
+</td></tr></table>
+<?}?>
+							</div>
+							</td>
+							<td style="width: 33%;" align="center">
+							<div class="vitrina" align="center" style="padding:0px 10px 0px 10px;">
+<?if($hitbox3!=NULL){?>
+<table class="list-product"><tr><td align="center">
+<table><tr><td style="height:85px;vertical-align:middle;" valign="middle">
+<a href="<?=SITE_URL?>/shop/catalog/product/<?=$hitbox3['1Cid']?>/<?=Text::cirilToLatin($hitbox3['brand'])?>-<?=Text::cirilToLatin($hitbox3['name'])?>.html">
+<img src="<?=$hitbox3['thumbnail']!=""?$hitbox3['thumbnail']:"/index_files/noimage.jpg"?>" alt="<?=$hitbox3['name']?>" class="catalog-list-image" width="85">
+</a>
+</td></tr></table>
+<div class="catalog-list-brand"><?=$hitbox3['brand']?></div>
+<div>
+<a href="<?=SITE_URL?>/shop/catalog/product/<?=$hitbox3['1Cid']?>/<?=Text::cirilToLatin($hitbox3['brand'])?>-<?=Text::cirilToLatin($hitbox3['name'])?>.html" style="line-height:15px;text-decoration:none;color:#00539A;font-family:Verdana;font-size:12px;">
+<b><?=$hitbox3['name']?></b></a></div>
+
+<?if($hitbox3['newprice']!=0){?><div class="catalog-list-oldprice">Цена: <?=$hitbox3['price']?> грн.</div>
+<div class="catalog-list-price">Новая цена: <?=$hitbox3['newprice']?> грн.</div>
+<?}else{?>
+<div class="catalog-list-price">Цена: <?=$hitbox3['price']?> грн.</div>
+<?}?>
+<?if($hitbox3['price']>300 || $product['newprice']>300){?><div class="free-dostavka">Бесплатная доставка</div><?}?>
+</td></tr></table>
+<?}?>
+							</div>
+							</td>
+						</tr>
+					</table>
+					</td>
+					<td style="width: 210px" valign="top">
+					<div class="orangeblock" style="height: 254px;">
+						<h3 style="margin: 7px 0px 4px 0px; text-align: center; font-family: arial, Helvetica, sans-serif; font-size: 15px; font-weight: bold; text-transform: uppercase;  color: #000;letter-spacing: 1px;">
+						Мебель на заказ</h3>
+<div style="margin:0px 7px;" align="center">
+<a title="Мебель на заказ!" href="<?=SITE_URL?>/article/service/7/mebel.html">
+<img src="/index_files/block_mebel.png" border="0" />
+</a>
+<h3 style="font-family:verdana;font-size: 13px; margin: 0px; color: rgb(235, 239, 241);">
+<a class="noun" title="Мебель на заказ! " style="color:#000;" href="#">
+Воспользуйтесь нашими услугами и Вы останитесь довольны!</a>
+</h3>						
+</div>
+<?if($aclublist!=NULL){foreach ($aclublist as $key=>$val){
+$val['short_text']=str_replace('" ','» ',$val['short_text']);
+$val['short_text']=str_replace('",','»,',$val['short_text']);
+$val['short_text']=str_replace('"','«',$val['short_text']);
+?>	
+<div style="padding: 3px 7px 4px 7px; margin-right: 7px; margin-left: 7px; color: #000; font-size: 13px; font-family: verdana; font-weight: bold; line-height: 19px;text-align:center;">
+<a href="#" style="color: #000;" class="noun">
+
+</a></div>
+<?}}?> 
+</div>
+					</td>
+				</tr>
+			</table>
+		</div>

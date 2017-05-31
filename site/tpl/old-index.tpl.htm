@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?=CHARSET?>" />
+<title><?=$meta["title"]?></title>
+<meta name="description" content="<?=$meta["description"]?>" />
+<meta name="keywords" content="<?=$meta["keywords"]?>" />
+<style>
+.polosa{
+background: url("/design/img/title-bg.png") repeat-x 0 0 transparent;
+}
+.logo {
+background: url("/design/img/logo.png") no-repeat 0 0 transparent;
+width: 213px;
+height: 62px;
+}
+#masthead {
+height:100px;
+margin: 25px 0px;
+}
+
+#container {
+	position: relative;
+	width: 1020px;
+	border:1px solid orangered;
+}
+
+#left_col {
+	width: 240px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+
+#page_content {
+	margin-left: 240px;
+}
+
+#footer {
+}
+</style>
+<script type="text/javascript" src="/lib/jQuery/jquery-1.4.min.js"></script>
+
+</head>
+<body>
+<div id="body" align="center">
+
+<div id="masthead" class="polosa">
+
+<table style="width: 1020px;height:100px;" cellpadding="0" cellspacing="0"><tr>
+<td valign="top" width="240" style="padding-bottom:18px;">
+
+<div class="logo" style="margin-top:18px;">
+<?if($_SERVER['REQUEST_URI'] != '/'){?>
+<a href="/" style="display:block;height:100%">&nbsp;</a>
+<?}?></div>
+
+</td><td valign="top" style="padding-bottom:18px;">
+
+<!-- ****************search****************** -->
+            <div class="search" style="margin-top:18px;">
+                <div class="ui-widget">
+                    <form action="/search/" method="POST">
+                    <!--<label for="tags"></label>-->
+                        <input id="tags" type="text" value="" placeholder="Поиск" name="search_input" />
+                        <input type="submit" value="" />
+                    </form>
+                </div>
+            </div> 
+<!-- *****************/search***************** -->
+
+</td><td>
+
+<div class="on-line">
+<span>Свяжитесь с нами по телефонам:</span>
+<span class="phone">+38 (044) 500-16-73</span>
+<!--            <a href="#" class="form">Online запрос</a> -->
+<a class="show_feedback_popup" rel="form_feedback" href="#">Online запрос</a>
+<!-------------------------------------------------------->
+<?include PATH_INC."/form_feedback.tpl.htm"?>
+<!-------------------------------------------------------->            
+</div>
+
+</td><td style="background-color:white;" width="240">
+
+<ul class="user-menu">
+<li><a class="cart" href="/shop/shopping/index.html">Корзина</a></li>
+<li><a class="pay" href="#">Оплата</a></li>
+<li><a class="delivery" href="#">Доставка</a></li>
+</ul>
+
+</td>
+</tr></table>
+
+
+</div>
+<div id="container">
+	<div id="left_col">
+	</div>
+	<div id="page_content">
+	</div>
+</div>
+<div id="footer">
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+<?if($_SESSION['userlevel'] >= 5){?>
+<!-- slide_admin_panel -->
+<!--<script type="text/javascript" src="/lib/jQuery/jquery-1.4.min.js"></script>-->
+<link href="<?=PATH_LIB?>/slide_admin_panel/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="<?=PATH_LIB?>/slide_admin_panel/slide_admin_panel.js"></script>
+<!-- /slide_admin_panel -->
+<?}?>
+<!-- form_feedback -->
+<link rel="stylesheet" href="<?=PATH_SITE_DESIGN?>/form_feedback/style.css">
+<script src="<?=PATH_SITE_DESIGN?>/form_feedback/form_feedback.js"></script>
+<!-- /form_feedback -->
+
+<!-- posstore_menu -->
+<!--<script type="text/javascript" src="/site/design/menu_items/jquery-1.js"></script>-->
+<link href="/site/design/menu_items/reset.css" rel="stylesheet" type="text/css">
+<link href="/site/design/menu_items/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/site/design/menu_items/main.js"></script>
+<!-- /posstore_menu -->
+
+
+<!-- block_hit -->
+<link rel="stylesheet" type="text/css" href="<?=PATH_SITE_DESIGN?>/block_hit/style.css">
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<script type="text/javascript" src="<?=PATH_SITE_DESIGN?>/block_hit/jquery.min.js"></script> 
+<script type="text/javascript" src="<?=PATH_SITE_DESIGN?>/block_hit/jquery.scrollbox.js"></script>
+<script type="text/javascript" src="<?=PATH_SITE_DESIGN?>/block_hit/block_hit.js"></script>
+<!-- /block_hit -->
+
+<!-- search_live -->
+<link rel="stylesheet" href="<?=PATH_SITE_DESIGN?>/search_live/jquery-ui.css">
+<script src="<?=PATH_SITE_DESIGN?>/search_live/jquery-1.10.2.js"></script>
+<script src="<?=PATH_SITE_DESIGN?>/search_live/jquery-ui.js"></script>
+<script src="<?=PATH_SITE_DESIGN?>/search_live/key_words_list.js"></script>
+<script>
+  $(function() {
+    var availableTags = [
+"Рамка",
+"Рамки на тележки",
+"Стойки рамок",
+"Универсальные держатели",
+"Держатели-подставки",
+"Магнитные держатели",
+"Подвесные держатели",
+"Держатели на сетки",
+"Держатели на трубы",
+"Держатели на ящики",
+"Ценникодержатели прищепки",
+"Ценникодержатели зажимы",
+"Ценникодержатели на подставках",
+"Иголка",
+"Ценникодержатели для колбас",
+"Ценникодержатели на бутылки",
+"Подставки из акрила",
+"Подставки из ПВХ",
+"Кассеты",
+"Полочные ценникодержатели",
+"Разделители",
+"Плакаты",
+"Подвесная система",
+"Воблеры и стопперы",
+"Карманы",
+"Таблички и маркеры",
+"Для импульсных покупок",
+"Антикражные средства",
+"Покупательские корзины",
+"Клик-рамы"
+<?
+/*
+$key_words = Search::getKeyWordsForLiveSearch();
+if($key_words != NULL)
+{
+    foreach($key_words as $key=>$word)
+    {
+	    echo '"'.$word['caption_full'].'",';	
+	}	
+}
+*/
+?>
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
+</script>
+<!-- /search_live -->
+
+<!-- Lupa -->
+
+<!-- /Lupa -->
+
+
+<!-- Check Form-->
+
+
+<!-- /Check Form-->
+    <link media="all" href="<?=PATH_SITE_DESIGN?>/css/style.css" type="text/css" rel="stylesheet"/>
+    <link media="all" href="<?=PATH_SITE_DESIGN?>/css/reset.css" type="text/css" rel="stylesheet"/>
+    <link media="all" href="<?=PATH_SITE_DESIGN?>/css/shop.css" type="text/css" rel="stylesheet"/>
+<!--
+<link media="all" href="<?=PATH_DESIGN?>/css/feature-select.css" type="text/css" rel="stylesheet"/>
+<link media="all" href="<?=PATH_DESIGN?>/css/in-cart.css" type="text/css" rel="stylesheet"/>
+<link media="all" href="<?=PATH_DESIGN?>/css/skin.css" type="text/css" rel="stylesheet"/>
+<link media="all" href="<?=PATH_DESIGN?>/css/skin_002.css" type="text/css" rel="stylesheet"/>
+<link media="all" href="<?=PATH_DESIGN?>/css/skin_003.css" type="text/css" rel="stylesheet"/>
+<link media="all" href="<?=PATH_DESIGN?>/css/stylist.css" type="text/css" rel="stylesheet"/>
+<link media="all" href="<?=PATH_DESIGN?>/css/ware.css" type="text/css" rel="stylesheet"/>
+-->
+
+
+
+
+<?include PATH_INC."/slide_admin_panel.htm";?>
+<!------------------------------------->
+
+<!------------------------------------->
+
+<div id="wrap">
+    <div class="header">
+        <div class="wrap">
+<?if($_SERVER['REQUEST_URI'] == '/'):?>
+<div class="logo"></div>
+<?else:?>
+<a href="/" class="logo"></a>
+<?endif;?>
+<!-- ****************search****************** -->
+            <div class="search">
+                <div class="ui-widget">
+                    <form action="/search/" method="POST">
+                    <!--<label for="tags"></label>-->
+                        <input id="tags" type="text" value="" placeholder="Поиск" name="search_input" />
+                        <input type="submit" value="" />
+                    </form>
+                </div>
+            </div> 
+<!-- *****************/search***************** -->
+            <div class="on-line">
+                <span>Свяжитесь с нами по телефонам:</span>
+                <span class="phone">+38 (044) 500-16-73</span>
+<!--            <a href="#" class="form">Online запрос</a> -->
+                <a class="show_feedback_popup" rel="form_feedback" href="#">Online запрос</a>
+<!-------------------------------------------------------->
+<?include PATH_INC."/form_feedback.tpl.htm"?>
+<!-------------------------------------------------------->            
+            </div>
+            <ul class="user-menu">
+                <li><a class="cart" href="/shop/shopping/index.html">Корзина</a></li>
+                <li><a class="pay" href="#">Оплата</a></li>
+                <li><a class="delivery" href="#">Доставка</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="both br_20"></div>
+    
+    
+
+    
+    
+        <div class="all">
+            <div class="wrap">
+                <div class="left-bar">
+           		    <?=$main_menu?>
+   		   		    <div class="both br_20"></div>
+		            <div class="catalog" style="text-align:left;">
+                        <div>
+                            <a href="/userfiles/files/catalog/em4v9V8.pdf" target="_blank" class="view" style="text-decoration:none;">
+					            <span class="inl"></span>
+					            <span class="inl-block">Посмотреть каталог Online</span>
+				            </a>
+				        </div>
+				        <div>
+                            <a href="/userfiles/files/catalog/em4v9V8.pdf.zip" target="_blank" class="download" style="text-decoration:none;">
+					            <span class="inl"></span>
+					            <span class="inl-block">Скачать каталог</span>
+				            </a>
+				        </div>
+                    </div>
+                </div>
+                <div class="content"><?=$c_cont?></div>
+                <div class="both br_20"></div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="both" style="height:25px"></div>
+    <div style="width:1000px;height:120px;margin:0 auto;">
+    <div class="footer_menu">
+        <div>
+            <span class="bold inline"><span>© 2013 ООО «</span><span class="red"><?=SITE_NAME?></span><span>»</span></span>
+            <span><?=CONTACT_ADRESS?></span>
+        </div>
+        <div class="footer_menu">
+            <span class="_title">Звоните по телефону: </span>
+            <span><?=CONTACT_TEL_OFFICE?></span>
+            <span><?=CONTACT_TEL_MOB?></span>
+        </div>
+        <div class="footer_menu">
+            <span class="_title">Пишите на e-mail:<a href="mailto:<?=EMAIL_BOSS?>"> <?=EMAIL_BOSS?></a></span>
+            <span>Skype: <?=CONTACT_SKYPE?></span>
+        </div>
+    </div>
+    <div class="footer_menu">
+        <div class="footer_menu">
+            <li><a href="/shop/catalog/list/12.html">TEST</a></li>
+            <li><a href="/page/О_нас/">О компании</a></li>
+			<li><a href="/info/12.html">Контакты</a></li>
+			<li><a href="/info/article/some.html">Карта проезда</a></li>
+			<li><a href="/content/74-fotogalereya/">Фотогалерея</a></li>
+        </div>
+        <div class="footer_menu">
+            <li><a href="/content/75-katalog/">Каталог</a></li>
+			<li><a href="/content/76-prays-list/">Прайс лист</a></li>
+			<li><a href="/content/77-usloviya-zakaza/">Условия заказа</a></li>
+			<li><a href="/page/Доставка/">Доставка</a></li>
+        </div>
+    </div>
+</div>
+
+
+        
+<div id="debug" style="height:1px;position:absolute;z-index:7;top:30px;right:5px;" align="right"><?=$GLOBALS['DEBUG']?></div>
+<div id="debug_sql" style="height:1px;position:absolute;z-index:7;top:30px;left:5px;" align="left"><?=$GLOBALS['DEBUG_SQL']?></div>
+
+</body>
+
+</html>
