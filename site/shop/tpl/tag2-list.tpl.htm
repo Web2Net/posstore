@@ -34,7 +34,7 @@ if(!file_exists(getenv("DOCUMENT_ROOT").$img1))$img1="/design/img/noimage_740x48
 <?}}?>
 
 </div>
-<div style="padding:20px;"><?=$tag1_data['desc_full']?></div>
+<div style="padding:20px;text-align:justify;"><h1><?=$tag1_data['desc_full']?></h1></div>
 <?
 $spec_where="hit!=0 AND `show`='1'";
 $gallery_top=Gallery::itemListSpecial($spec_where);
